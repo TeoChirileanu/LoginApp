@@ -1,17 +1,19 @@
+import '../auth/auth_util.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import '../home_page/home_page_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class LoginWidget extends StatefulWidget {
-  LoginWidget({Key key}) : super(key: key);
+class LoginPageWidget extends StatefulWidget {
+  LoginPageWidget({Key key}) : super(key: key);
 
   @override
-  _LoginWidgetState createState() => _LoginWidgetState();
+  _LoginPageWidgetState createState() => _LoginPageWidgetState();
 }
 
-class _LoginWidgetState extends State<LoginWidget> {
+class _LoginPageWidgetState extends State<LoginPageWidget> {
   TextEditingController emailTextController;
   TextEditingController passwordTextController;
   bool passwordVisibility;
@@ -199,8 +201,24 @@ class _LoginWidgetState extends State<LoginWidget> {
                                 Padding(
                                   padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
                                   child: FFButtonWidget(
-                                    onPressed: () {
-                                      print('Button pressed ...');
+                                    onPressed: () async {
+                                      final user = await signInWithEmail(
+                                        context,
+                                        emailTextController.text,
+                                        passwordTextController.text,
+                                      );
+                                      if (user == null) {
+                                        return;
+                                      }
+
+                                      await Navigator.pushAndRemoveUntil(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              HomePageWidget(),
+                                        ),
+                                        (r) => false,
+                                      );
                                     },
                                     text: 'Sign in',
                                     options: FFButtonOptions(
@@ -311,8 +329,22 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                 ),
                                               ),
                                               FFButtonWidget(
-                                                onPressed: () {
-                                                  print('Button pressed ...');
+                                                onPressed: () async {
+                                                  final user =
+                                                      await signInWithGoogle(
+                                                          context);
+                                                  if (user == null) {
+                                                    return;
+                                                  }
+                                                  await Navigator
+                                                      .pushAndRemoveUntil(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          HomePageWidget(),
+                                                    ),
+                                                    (r) => false,
+                                                  );
                                                 },
                                                 text: 'Sign in',
                                                 icon: Icon(
