@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'auth/firebase_user_provider.dart';
-import 'package:login_app/login_page/login_page_widget.dart';
+import 'package:login_app/phone_login_page/phone_login_page_widget.dart';
 import 'package:login_app/home_page/home_page_widget.dart';
 
 void main() async {
@@ -40,7 +40,7 @@ class _MyAppState extends State<MyApp> {
             )
           : currentUser.loggedIn
               ? HomePageWidget()
-              : LoginPageWidget(),
+              : PhoneLoginPageWidget(),
     );
   }
 }
